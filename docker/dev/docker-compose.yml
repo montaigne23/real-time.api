@@ -1,0 +1,38 @@
+version: '3.6'
+
+services:
+  gitlab-ce:
+    image: gitlab/gitlab-ce:latest
+    container_name: gitlab-ce-junior
+    restart: always
+    hostname: $HOSTNAME
+    env_file:
+      - ./.env
+    ports:
+      - '22:22'
+      - '80:80'
+      - '443:443'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url '${EXTERNAL_URL}'
+      # Add any other gitlab.rb configuration here, each on its own line
+    volumes:
+      - '$GITLAB_HOME/config:/etc/gitlab'
+      - '$GITLAB_HOME/logs:/var/log/gitlab'
+      - '$GITLAB_HOME/data:/var/opt/gitlab'
+    shm_size: '256m'
+
+#  gitlab-runner1:
+#    image: gitlab/gitlab-runner:latest
+#    container_name: gitlab-runner-junior
+#    hostname: gitlab-runner1
+#    volumes:
+#      - './gitlab-runner1-config:/etc/gitlab-runner'
+#      - '/var/run/docker.sock:/var/run/docker.sock'
+#    networks:
+#      - gitlab-network
+
+#networks:
+#  gitlab-network:
+#    name: gitlab-network
+
