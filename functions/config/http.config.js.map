@@ -1,1 +1,0 @@
-{"version":3,"file":"http.config.js","sourceRoot":"","sources":["../../src/config/http.config.ts"],"names":[],"mappings":";;;AAIA,MAAa,UAAU;IAGrB,GAAG,CAAC,IAAsC;QACxC,OAAO;YACL,GAAG,EAAE,IAAI,CAAC,aAAa,CAAC,GAAG,CAAW,cAAc,CAAC;YACrD,OAAO,EAAE;gBACP,cAAc,EAAE,kBAAkB;gBAClC,WAAW,EAAE,kCAAkC;aAChD;SACF,CAAC;IACJ,CAAC;CACF;AAZD,gCAYC"}
