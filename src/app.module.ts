@@ -15,6 +15,7 @@ import { HttpConfig } from './config/http.config';
     }),
     CommentModule,
     ConfigModule.forRoot({
+      envFilePath: '.env',
       isGlobal: true,
       expandVariables: true,
     }),

@@ -7,17 +7,19 @@ import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class SendCommentService {
-  constructor(private readonly httpService: HttpService) { }
-/**
- * 
- * @param data 
- * @param token 
- * @returns 
- */  
-  async sendComment(
-    data:SendCommentRequestDto,
-    token:string
-  ){
+  constructor(private readonly httpService: HttpService, private configService: ConfigService) { }
+  /**
+   * 
+   * @param token 
+   * @param data 
+   * @returns 
+  */  
+ async sendComment(
+   data:SendCommentRequestDto,
+   token:string
+   ){
+    
+    const MAIN_API_URL = this.configService.get<string>('MAIN_API_URL');
     const axiosConfig: AxiosRequestConfig = {
       headers: {
         'X-Api-Key': token,
@@ -33,7 +35,7 @@ export class SendCommentService {
 
     return this.httpService
       .post<SendCommentResponseDto>(
-        `https://apidevtest.mendolearn.com/web/v2/posts/comments`,
+        `${MAIN_API_URL}/posts/comments`,
         data,
       axiosConfig
       )
