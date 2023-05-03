@@ -27,11 +27,11 @@ export class SendCommentService {
       },
     }; 
     console.log(data);
-    const formData = new FormData();
-    // formData.append('title', 'Mon titre');
-    formData.append('comment', "test");
-    formData.append('_comment', "test");
-    formData.append('post_id', "701");
+    // const formData = new FormData();
+    // // formData.append('title', 'Mon titre');
+    // formData.append('comment', "test");
+    // formData.append('_comment', "test");
+    // formData.append('post_id', "701");
 
     return this.httpService
       .post<SendCommentResponseDto>(
