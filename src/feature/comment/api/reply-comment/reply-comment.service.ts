@@ -1,28 +1,46 @@
-import { Injectable } from "@nestjs/common";
-import { HttpService } from "@nestjs/axios";
-import { ReplyCommentRequestDto, ReplyCommentResponseDto } from "./dto";
-import {
-  ApiResponse,
-  TFetchItemsResponse,
-} from "../../../../core/models/types";
-import { ConfigService } from "@nestjs/config";
-import { HttpConfig } from "src/config/http.config";
+import { ReplyCommentRequestDto, ReplyCommentResponseDto } from './dto';
+import { Injectable } from '@nestjs/common';
+import { WsResponse } from '@nestjs/websockets';
+import { HttpService } from '@nestjs/axios';
+import { AxiosRequestConfig } from 'axios';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class ReplyCommentService {
-  constructor(private readonly httpService: HttpService,
-    ) {
-    }
+  constructor(private readonly httpService: HttpService, private configService: ConfigService) { }
+  /**
+   * 
+   * @param token 
+   * @param data 
+   * @returns 
+  */  
+ async sendComment(
+   data:ReplyCommentRequestDto,
+   token:string
+   ){
+    
+    const MAIN_API_URL = this.configService.get<string>('MAIN_API_URL');
+    const axiosConfig: AxiosRequestConfig = {
+      headers: {
+        'X-Api-Key': token,
+        'Content-Type': 'multipart/form-data',
+      },
+    }; 
+    console.log(data);
+    const formData = new FormData();
+    // formData.append('title', 'Mon titre');
+    formData.append('comment', "test");
+    formData.append('_comment', "test");
+    formData.append('post_id', "701");
 
-  async replyComment(
-    replyCommentRequestDto: ReplyCommentRequestDto,
-  ): Promise<ReplyCommentResponseDto> {
     return this.httpService
-      .get<ApiResponse<TFetchItemsResponse<Comment>>>(
-        `/posts/comments/fetch-ids?comment_id=${replyCommentRequestDto.postId}`,
+      .post<ReplyCommentResponseDto>(
+        `${MAIN_API_URL}/posts/comments`,
+        data,
+      axiosConfig
       )
       .toPromise()
-      .then((r) => ({ success: true, data: r.data.data.items[0] }));
+      .then((r) => ({ success: true, data: r.data }));
     return;
   }
 }

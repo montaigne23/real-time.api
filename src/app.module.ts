@@ -4,10 +4,12 @@ import { RouterModule } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { HttpModule } from '@nestjs/axios';
 import { HttpConfig } from './config/http.config';
+import { MemoryStoredFile, NestjsFormDataModule } from 'nestjs-form-data';
 
 @Global()
 @Module({
   imports: [
+    NestjsFormDataModule.config({ storage: MemoryStoredFile }),
     HttpModule.registerAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) =>

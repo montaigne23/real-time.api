@@ -1,3 +1,6 @@
 import { ApiResponse } from "../../../../../core/models/types";
 
-export class ReplyCommentResponseDto extends ApiResponse<Comment> {}
+export class ReplyCommentResponseDto{
+    success:boolean;
+    data:any;
+}

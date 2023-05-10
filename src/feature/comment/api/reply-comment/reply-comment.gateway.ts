@@ -13,14 +13,25 @@ import { ReplyCommentService } from "./reply-comment.service";
 @WebSocketGateway({ cors: { origin: "*" } })
 export class ReplyCommentGateway {
   constructor(private readonly replyCommentService: ReplyCommentService) {}
-  @WebSocketServer() server: Server;
 
-  @SubscribeMessage("receive-comment")
+  @WebSocketServer() server: Server;
+  connectedClients: Socket[] = [];
+
+  handleConnection(client: Socket, ...args: any[]) {
+    console.log(`Client connected: ${client.id}`);
+    this.connectedClients.push(client);
+  }
+
+  handleDisconnect(client: Socket) {
+    console.log(`Client disconnected: ${client.id}`);
+    this.connectedClients = this.connectedClients.filter((c) => c !== client);
+  }
+
+  @SubscribeMessage('reply-comment')
   async sendComment(
-    @MessageBody() data: ReplyCommentRequestDto,
+    @MessageBody() data:ReplyCommentRequestDto,
+    @ConnectedSocket() client: Socket,
   ): Promise<WsResponse<ReplyCommentResponseDto>> {
-    const replyCommentResponseDto: ReplyCommentResponseDto =
-      await this.replyCommentService.replyComment(data);
-    return { event: "receive-comment", data: replyCommentResponseDto };
+    return
   }
 }

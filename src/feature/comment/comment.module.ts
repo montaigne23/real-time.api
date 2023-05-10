@@ -7,6 +7,7 @@ import { SendCommentGateway } from "./api/send-comment/send-comment.gateway";
 import { ReceiveCommentGateway } from "./api/receive-comment/receive-comment.gateway";
 import { ReplyCommentService } from "./api/reply-comment/reply-comment.service";
 import { ReplyCommentGateway } from "./api/reply-comment/reply-comment.gateway";
+import { ReplyCommentController } from "./api/reply-comment/reply-comment.controller";
 
 @Module({
   providers: [
@@ -17,6 +18,6 @@ import { ReplyCommentGateway } from "./api/reply-comment/reply-comment.gateway";
     ReceiveCommentGateway,
     ReplyCommentGateway,
   ],
-  controllers: [ReceiveCommentController, SendCommentController],
+  controllers: [ReceiveCommentController, SendCommentController, ReplyCommentController],
 })
 export class CommentModule {}
