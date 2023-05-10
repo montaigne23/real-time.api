@@ -16,7 +16,7 @@ export class ReplyCommentController {
   ): Promise<ReplyCommentResponseDto> {
     var replyCommentResponseDto: ReplyCommentResponseDto =
       await this.replyCommentService.sendComment(replyCommentRequestDto, apiKey);
-    this.replyCommentGateway.server.emit(`receive-reply-comment-${replyCommentRequestDto.parent_id}`,
+    this.replyCommentGateway.server.emit(`receive-comment-${replyCommentRequestDto.parent_id}`,
       replyCommentResponseDto.data);
     return replyCommentResponseDto;
   }
